@@ -188,7 +188,13 @@ if st.button("💾 Save Learning Context", use_container_width=True):
         "updated_at": now,
     }
 
+    # Save the new context to disk
     save_json(CONTEXT_FILE, updated_context)
+
+    # IMPORTANT:
+    # Update the in-memory context too, so the sections
+    # below immediately use the newly saved values.
+    context = updated_context
 
     if session_summary.strip():
         history.append({
@@ -196,6 +202,7 @@ if st.button("💾 Save Learning Context", use_container_width=True):
             "summary": session_summary,
             "next_step": next_step_input,
         })
+
         save_json(HISTORY_FILE, history)
 
     st.success("Learning context saved.")
